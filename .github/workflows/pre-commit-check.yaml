@@ -7,7 +7,7 @@ on:
 
 jobs:
   check-code-with-cpp-linter-action: 
-    name: Check code
+    name: Check code with cpp-linter-action
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -28,4 +28,40 @@ jobs:
         run: |
           echo "Some files failed the linting checks!"
           exit 1
+  
+  check-code-with-universum:
+    name : Check code with universum
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Setup python 3.8
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.8
+
+    - name: Install dependency
+      run: |
+        pip install universum
+        pip install gitpython
+        sudo apt-get install clang-format
+        sudo apt-get install git
+
+    - name: Universum
+      run:
+        python -u -m universum
+        --vcs-type="ghactions"
+        --ghactions-payload="@${{ github.event_path }}"
+        --ghactions-token="${{ secrets.GITHUB_TOKEN }}"
+        --report-to-review
+        --no-diff
+        --fail-unsuccessful
+
+    - name: Collect artifacts
+      uses: actions/upload-artifact@v4
+      if: ${{ always() }}
+      with:
+        name: artifacts
+        path: artifacts
+
+    
 
