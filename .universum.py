@@ -28,18 +28,21 @@ def get_all_files_in_dir(path: str, extensions: list):
 
 # change directory to temp
 
-current_dir = os.getcwd()
-os.chdir("./temp")
-found_files = get_all_files_in_dir(".", ["cpp", "c"])
+# current_dir = os.getcwd()
+# os.chdir("./temp")
+found_files = get_all_files_in_dir("temp/", ["cpp", "c"])
+print(found_files)
 
 
 if found_files:
-    root_dir =  "clang_report/"
+    root_dir =  "temp/clang_report/"
     create_directories_for_output_files(found_files, root_dir=root_dir)
     os.environ["ENABLE_CLANG_FORMAT"] = "1"
 
 # change directory back
-os.chdir(current_dir)
+# os.chdir(current_dir)
+    
+print (os.getcwd())
 
 configs = Configuration(
     [
