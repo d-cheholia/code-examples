@@ -6,11 +6,34 @@ on:
     branches: [main, 'feat/*']
 
 jobs:
+  check-code-with-cpp-linter-action: 
+    name: Check code with cpp-linter-action
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cpp-linter/cpp-linter-action@v2
+        id: linter
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          style: file
+          tidy-checks: 'cppcoreguidelines-*'
+          # The following value will only update a single comment
+          # in a pull request's thread. Set it to false to disable the comment.
+          # Set it to true to post a new comment (and delete the old comment).
+          thread-comments: ${{ github.event_name == 'pull_request' && 'update' }}
+
+      - name: Fail fast?!
+        if: steps.linter.outputs.checks-failed > 0
+        run: |
+          echo "Some files failed the linting checks!"
+          exit 1
+  
   check-code-with-universum:
     name : Check code with universum
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+
     - name: Setup python 3.8
       uses: actions/setup-python@v4
       with:
@@ -22,10 +45,6 @@ jobs:
         pip install gitpython
         sudo apt-get install clang-format
         sudo apt-get install git
-    
-    - name: Show corrent directory
-      run: |
-        pwd
 
     - name: Universum
       run:
@@ -35,6 +54,7 @@ jobs:
         --ghactions-token="${{ secrets.GITHUB_TOKEN }}"
         --report-to-review
         --no-diff
+        --fail-unsuccessful
 
     - name: Collect artifacts
       uses: actions/upload-artifact@v4
@@ -42,6 +62,3 @@ jobs:
       with:
         name: artifacts
         path: artifacts
-
-    
-
