@@ -55,7 +55,7 @@ configs = Configuration(
                 "--executable",
                 "clang-format",
                 "--files",
-                *[str(file) for file in found_files],
+                "*/**.cpp",
                 "--result-file",
                 "${CODE_REPORT_FILE}",
                 "--output-directory",
