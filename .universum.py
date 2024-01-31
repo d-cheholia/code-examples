@@ -30,9 +30,9 @@ os.chdir("./temp")
 
 found_files = get_all_files_in_dir(".", ["cpp", "c"])
 
-# if found_files:
-#     root_dir = "clang_report/"
-#     create_directories_for_output_files(found_files, root_dir=root_dir)
+if found_files:
+    root_dir = "./clang_report/"
+    create_directories_for_output_files(found_files, root_dir=root_dir)
 os.environ["ENABLE_CLANG_FORMAT"] = "1"
 
 # convert to absolute paths
