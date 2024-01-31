@@ -10,10 +10,6 @@ def create_directories_for_output_files(files: list, root_dir: str, clear = True
     Create directories for output files.
     There is temporary solution to avoid errors when using universum.analyzers.clang_format
     """
-    # Remove root dir if exists
-    if clear:
-        shutil.rmtree(root_dir, ignore_errors=True)
-
     for file in files:
         Path(root_dir, file).parent.mkdir(parents=True, exist_ok=True)
 
@@ -35,7 +31,7 @@ print(found_files)
 
 
 if found_files:
-    root_dir =  "temp/clang_report/"
+    root_dir =  "clang_report/"
     create_directories_for_output_files(found_files, root_dir=root_dir)
     os.environ["ENABLE_CLANG_FORMAT"] = "1"
 
