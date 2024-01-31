@@ -1,4 +1,4 @@
-name: pre-commit check
+name: post-commit check
 
 on:
   push:
