@@ -11,6 +11,7 @@ def create_directories_for_output_files(files: list, root_dir: str, clear=True):
     There is temporary solution to avoid errors when using universum.analyzers.clang_format
     """
     for file in files:
+        print(Path(root_dir, file))
         Path(root_dir, file).parent.mkdir(parents=True, exist_ok=True)
 
 
@@ -23,7 +24,7 @@ def get_all_files_in_dir(path: str, extensions: list):
 
 
 # change directory to temp
-os.chdir("./temp")
+# os.chdir("./temp")
 
 # change directory to temp
 found_files = get_all_files_in_dir(".", ["cpp", "c"])
@@ -35,6 +36,10 @@ if found_files:
     root_dir = "clang_report/"
     create_directories_for_output_files(found_files, root_dir=root_dir)
     os.environ["ENABLE_CLANG_FORMAT"] = "1"
+
+# convert to absolute paths
+for i in range(len(found_files)):
+    found_files[i] = os.path.abspath(str(found_files[i]))
 
 configs = Configuration(
     [
