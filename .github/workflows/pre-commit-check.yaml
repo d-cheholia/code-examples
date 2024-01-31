@@ -23,11 +23,9 @@ jobs:
         sudo apt-get install clang-format
         sudo apt-get install git
     
-    - name: Create folder
+    - name: Show corrent directory
       run: |
         pwd
-        mkdir -p ./temp/clang_report/show_time/
-        mkdir -p ./temp/clang_report/hello_world/
 
     - name: Universum
       run:
