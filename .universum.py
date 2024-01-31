@@ -25,21 +25,14 @@ def get_all_files_in_dir(path: str, extensions: list):
     return [file for ext in extensions for file in Path(path).rglob(f"*.{ext}")]
 
 
-# print $PROJECT_ROOT env
-
-
+# change directory to temp
+os.chdir("./temp")
 found_files = get_all_files_in_dir(".", ["cpp", "c"])
 
 
 if found_files:
     root_dir = ""
-    # temp solution
-    root_dir += "temp" + "/clang_report"
-
-    # if "PROJECT_ROOT" not in os.environ:
-    #     root_dir = "clang_report"
-    # else:
-    #     root_dir = os.environ["PROJECT_ROOT"] + "/clang_report"
+    root_dir +=  "/clang_report"
     create_directories_for_output_files(found_files, root_dir=root_dir)
     os.environ["ENABLE_CLANG_FORMAT"] = "1"
 
