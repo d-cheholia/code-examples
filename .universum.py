@@ -26,7 +26,9 @@ def get_all_files_in_dir(path: str, extensions: list):
 
 # current_dir = os.getcwd()
 # os.chdir("./temp")
-found_files = get_all_files_in_dir("temp/", ["cpp", "c"])
+found_files = get_all_files_in_dir(".", ["cpp", "c"])
+found_files = [str(file) for file in found_files if "temp" not in str(file)]
+
 print(found_files)
 
 
@@ -60,7 +62,10 @@ configs = Configuration(
                 "--output-directory",
                 "clang_report",
             ],
+            directory="."
         ),
+
+
     ]
 )
 
