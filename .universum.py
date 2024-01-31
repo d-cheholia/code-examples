@@ -2,16 +2,20 @@
 from universum.configuration_support import Configuration, Step
 from pathlib import Path
 import os
+import shutil
 
 
-def create_directories_for_output_files(files: list, root_dir: str):
+def create_directories_for_output_files(files: list, root_dir: str, clear = True):
     """
     Create directories for output files.
     There is temporary solution to avoid errors when using universum.analyzers.clang_format
     """
+    # Remove root dir if exists
+    if clear:
+        shutil.rmtree(root_dir, ignore_errors=True)
+
     for file in files:
         Path(root_dir, file).parent.mkdir(parents=True, exist_ok=True)
-
 
 def get_all_files_in_dir(path: str, extensions: list):
     """
@@ -29,10 +33,13 @@ found_files = get_all_files_in_dir(".", ["cpp", "c"])
 
 if found_files:
     root_dir = ""
-    if "PROJECT_ROOT" not in os.environ:
-        root_dir = "clang_report"
-    else:
-        root_dir = os.environ["PROJECT_ROOT"] + "/clang_report"
+    # temp solution
+    root_dir += "tmp" + "/clang_report"
+
+    # if "PROJECT_ROOT" not in os.environ:
+    #     root_dir = "clang_report"
+    # else:
+    #     root_dir = os.environ["PROJECT_ROOT"] + "/clang_report"
     create_directories_for_output_files(found_files, root_dir=root_dir)
     os.environ["ENABLE_CLANG_FORMAT"] = "1"
 
