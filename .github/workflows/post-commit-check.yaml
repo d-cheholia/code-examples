@@ -1,0 +1,17 @@
+name: pre-commit check
+
+on:
+  push:
+    branches: main
+
+jobs:
+  universum_check:
+    name: Basic Check
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
+    - name: Print Hello World
+      run: echo "Hello World"
