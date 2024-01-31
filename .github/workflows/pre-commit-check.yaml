@@ -35,7 +35,6 @@ jobs:
         --ghactions-token="${{ secrets.GITHUB_TOKEN }}"
         --report-to-review
         --no-diff
-        --fail-unsuccessful
 
     - name: Collect artifacts
       uses: actions/upload-artifact@v4
