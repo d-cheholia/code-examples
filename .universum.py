@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from universum.configuration_support import Configuration, Step
 from pathlib import Path
+import os
 import subprocess
 
 
@@ -43,14 +44,21 @@ def get_changed_cpp_c_files():
 
 # Get the list of changed .cpp and .c files
 changed_cpp_c_files = get_changed_cpp_c_files()
-print("\nChanged CPP and C files", changed_cpp_c_files, "\n")
-create_directories_for_output_files(changed_cpp_c_files, root_dir=Path("clang_report"))
+
+if changed_cpp_c_files:
+    print("\nChanged CPP and C files", changed_cpp_c_files, "\n")
+    create_directories_for_output_files(
+        changed_cpp_c_files, root_dir=Path("clang_report")
+    )
+    os.environ["ENABLE_CLANG_FORMAT"] = "1"
 
 configs = Configuration(
     [
+        Step(name="Print Hello world", command=["echo", "Hello world"]),
         Step(
             name="clang-format",
             code_report=True,
+            if_env_set="ENABLE_CLANG_FORMAT == 1",
             command=[
                 "python3",
                 "-m",
@@ -64,7 +72,7 @@ configs = Configuration(
                 "--output-directory",
                 "clang_report",
             ],
-        )
+        ),
     ]
 )
 
