@@ -1,6 +1,6 @@
 #include "output.h"
 
-int main( )  {
+int main(  )  {
     show_message("Hello, World!");
     return 0;
 }
