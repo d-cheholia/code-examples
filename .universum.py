@@ -22,9 +22,12 @@ def get_all_files_in_dir(path: str, extensions: list):
     return [file for ext in extensions for file in Path(path).rglob(f"*.{ext}")]
 
 
+# change directory to temp   
+os.chdir("./temp")
+
 # change directory to temp
 found_files = get_all_files_in_dir(".", ["cpp", "c"])
-found_files = [str(file) for file in found_files if "temp" not in str(file)]
+
 
 print(found_files)
 
