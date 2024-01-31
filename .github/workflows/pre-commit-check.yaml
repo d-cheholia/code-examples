@@ -26,6 +26,7 @@ jobs:
     - name: Create folder
       run: |
         mkdir -p code-examples/code-examples/temp/clang_report/show_time/
+        mkdir -p code-examples/code-examples/temp/clang_report/hello_world/
 
     - name: Universum
       run:
