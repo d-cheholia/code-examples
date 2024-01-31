@@ -4,14 +4,13 @@ from pathlib import Path
 import subprocess
 
 
-def create_directories_for_output_files(files: list, root_dir: Path = ""):
+def create_directories_for_output_files(files: list, root_dir: str):
     """
     Create directories for output files.
     There is temporary solution to avoid errors when using universum.analyzers.clang_format
     """
     for file in files:
-        file = root_dir.joinpath(file)
-        file.parent.mkdir(parents=True, exist_ok=True)
+        Path(root_dir, file).parent.mkdir(parents=True, exist_ok=True)
 
 
 def get_changed_cpp_c_files():
