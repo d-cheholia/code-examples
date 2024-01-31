@@ -22,6 +22,10 @@ jobs:
         pip install gitpython
         sudo apt-get install clang-format
         sudo apt-get install git
+    
+    - name: Create folder
+      run: |
+        mkdir -p code-examples/code-examples/temp/clang_report/show_time/
 
     - name: Universum
       run:
