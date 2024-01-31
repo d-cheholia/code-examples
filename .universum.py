@@ -34,7 +34,7 @@ found_files = get_all_files_in_dir(".", ["cpp", "c"])
 if found_files:
     root_dir = ""
     # temp solution
-    root_dir += "tmp" + "/clang_report"
+    root_dir += "temp" + "/clang_report"
 
     # if "PROJECT_ROOT" not in os.environ:
     #     root_dir = "clang_report"
